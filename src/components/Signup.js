@@ -1,7 +1,5 @@
-// src/components/Signup.js
-
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
@@ -17,18 +15,40 @@ const Signup = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const navigation = useNavigation();
 
+  const validateForm = () => {
+    if (!name) {
+      Alert.alert('Error', 'Please enter your name');
+      return false;
+    }
+
+    // Add other validations here
+    if (!email) {
+      Alert.alert('Error', 'Please enter your email');
+      return false;
+    }
+
+    if (!password) {
+      Alert.alert('Error', 'Please enter a password');
+      return false;
+    }
+
+    return true;
+  };
+
   const onSignUp = () => {
-    console.log("Sign Up button pressed", {
-      name,
-      email,
-      password,
-      weight,
-      height,
-      gender,
-      dob,
-    });
-    // Navigate to User Drawer after signing up
-    navigation.navigate('UserDrawer', {screen: 'Dashboard'}); // Change to UserDrawer after successful sign-up
+    if (validateForm()) {
+      console.log('Sign Up button pressed', {
+        name,
+        email,
+        password,
+        weight,
+        height,
+        gender,
+        dob,
+      });
+      // Navigate to User Drawer after signing up
+      navigation.navigate('UserDrawer', { screen: 'Dashboard' });
+    }
   };
 
   return (
